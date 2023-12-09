@@ -1,0 +1,29 @@
+from flask import Flask, request
+import smtplib
+
+app = Flask(__name__)
+
+@app.route('/report-incident', methods=['POST'])
+def report_incident():
+    # Get data from the POST request
+    reporter_name = request.form['reporter_name']
+    reporter_email = request.form['reporter_email']
+    incident_date = request.form['incident_date']
+    incident_details = request.form['incident_details']
+
+    # Save data to the database (use appropriate database operations here)
+
+    # Send email to the reporter
+    sender_email = 'your_email@gmail.com'  # Replace with your email
+    sender_password = 'your_password'  # Replace with your password
+    message = f"Subject: Child Labor Incident Reported\n\nDear {reporter_name},\n\nThank you for reporting the incident on {incident_date}. We will investigate this matter.\n\nBest regards,\nYour Organization"
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+        smtp.starttls()
+        smtp.login(sender_email, sender_password)
+        smtp.sendmail(sender_email, reporter_email, message)
+
+    return 'Incident reported successfully!'
+
+if __name__ == '__main__':
+    app.run(debug=True)

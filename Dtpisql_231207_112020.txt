@@ -1,0 +1,11 @@
+CREATE TABLE Reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    reporter_name VARCHAR(50),
+    reporter_email VARCHAR(100),
+    incident_date DATE,
+    incident_details TEXT,
+    report_status ENUM('Pending', 'Investigating', 'Resolved'),
+    assigned_to VARCHAR(50),
+    assigned_email VARCHAR(100),
+    FOREIGN KEY (assigned_email) REFERENCES Users(email)
+);
